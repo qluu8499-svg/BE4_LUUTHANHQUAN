@@ -1,0 +1,30 @@
+﻿@model BE4_LUUTHANHQUAN.Models.Category
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="bg-success" >XÓA DANH MỤC </h2>
+      @using (Html.BeginForm())
+      {
+        @Html.AntiForgeryToken()
+          <div class="form-horizontal">
+              <h4 class="bg-danger">Bạn thực sự muốn xóa danh mục này </h4>
+              <hr />
+          </div>
+   <div class="form-group">
+      <div class="control-label col-md-2">Tên danh mục </div>
+    <div class="col-md-10">
+        @* HIỂN THỊ GIÁ TRỊ CẢU CATEGORY NAME  *@
+        
+            @Html.DisplayFor(model => model.CategoryName)
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Xóa" class=btn btn-primary" /> |
+            @Html.ActionLink("Quay lại danh sach ", "Index", null, new { @class = "btn btn-primary" })
+        </div>
+        </div>
+    </div>
+      }

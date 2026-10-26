@@ -1,0 +1,60 @@
+﻿@model BE4_LUUTHANHQUAN.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Chi Tiết Sản Phẩm </h2>
+
+<div>
+ 
+    <dl class="dl-horizontal">
+        <dt>
+            Tên Sản Phẩm
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+
+        <dt>
+         Mô Tả Sản Phẩm 
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductDescription)
+        </dd>
+
+        <dt>
+            Đơn Giá Sản Phẩm
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductPrice)
+        </dd>
+
+        <dt>
+            Hình Ảnh Sản Phẩm
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductImage)
+        </dd>
+
+        <dt>
+            Danh Mục Sản Phẩm
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+  
+        <dt style="padding:10px"></dt>
+        <dd style="padding:10px">
+            @Html.ActionLink("Cập Nhật", "Edit", new { id = Model.ProductID }, new { @class = "btn btn-primary btn-sm" })
+            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-primary btn-sm" })
+        </dd>
+    </dl>
+</div>
+
