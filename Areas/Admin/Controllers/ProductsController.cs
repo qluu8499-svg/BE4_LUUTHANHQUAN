@@ -8,8 +8,10 @@ using System.Web;
 using System.Web.Mvc;
 using BE4_LUUTHANHQUAN.Models;
 using BE4_LUUTHANHQUAN.Models.ViewModel;
+using PagedList;
 using Microsoft.Ajax.Utilities;
 namespace BE4_LUUTHANHQUAN.Areas.Admin.Controllers
+   
 {
     public class ProductsController : Controller
     {
@@ -62,8 +64,8 @@ namespace BE4_LUUTHANHQUAN.Areas.Admin.Controllers
             }
             model.SortOrder = sortOrder;
 
-            // Đoạn code liên quan tới phân trang
-            // Lấy số trang hiện tại (mặc định là trang 1 nếu không có giá trị)
+          
+          
             int pageNumber = page ?? 1;
             int pageSize = 2; // Số sản phẩm mỗi trang
 
@@ -109,9 +111,27 @@ namespace BE4_LUUTHANHQUAN.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Products.Add(product);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.Products.Add(product);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                {
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            // Đoạn này sẽ ghi nhận chính xác Tên thuộc tính và Lỗi cụ thể là gì
+                            System.Diagnostics.Trace.TraceInformation("Property: {0} Error: {1}",
+                                                    validationError.PropertyName,
+                                                    validationError.ErrorMessage);
+                        }
+                    }
+                    throw; // Bấm tiếp tục chạy để xem log trong Output window của Visual Studio
+                }
+
             }
 
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", product.CategoryID);

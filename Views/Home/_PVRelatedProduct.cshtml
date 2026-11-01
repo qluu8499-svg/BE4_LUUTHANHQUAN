@@ -1,0 +1,33 @@
+﻿@model BE4_LUUTHANHQUAN.Models.ViewModel.ProductDetailsVM
+@using PagedList.Mvc
+
+<link rel="stylesheet" type="text/css" href="~/Content/myStyle/CustomerHome.css" />
+
+<!-- Hiển thị danh sách sản phẩm tương tự -->
+@if (Model.RelatedProducts != null && Model.RelatedProducts.Any())
+{
+    <section class="container-fluid featureProd">
+        <h4 style="font-weight:bold;">Sản phẩm tương tự</h4>
+        <ul class="feature-container">
+            @foreach (var product in Model.RelatedProducts)
+            {
+                <li class="fproduct-item">
+                    <div>
+                        <a href="@Url.Action("ProductDetails", "Home", new { id = product.ProductID })">
+                            <img src="@Html.DisplayFor(modelItem => product.ProductImage)" />
+                        </a>
+                    </div>
+                    <div>
+                        <h5>@Html.DisplayFor(modelItem => product.ProductName)</h5>
+                        <p class="prodSale">@Html.DisplayFor(modelItem => product.ProductPrice)</p>
+                    </div>
+                </li>
+            }
+        </ul>
+    </section>
+}
+```[cite: 6]
+
+### 💡 Lưu ý nhỏ:
+* Khác với file `_PVTopProduct` trước đó (có thêm phần phân trang `PagedListPager`), file này chỉ dùng để liệt kê danh sách các sản phẩm tương tự dựa trên điều kiện `Model.RelatedProducts`[cite: 4, 6].
+* Đảm bảo rằng trong class `ProductDetailsVM` của bạn đã được định nghĩa thuộc tính `RelatedProducts` (ví dụ: `public IPagedList<Product> RelatedProducts { get; set; }` hoặc `public List<Product> RelatedProducts { get; set; }`) để tránh báo lỗi[cite: 6].
