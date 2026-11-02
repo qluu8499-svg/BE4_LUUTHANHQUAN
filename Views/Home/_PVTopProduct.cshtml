@@ -1,15 +1,15 @@
 ﻿@model BE4_LUUTHANHQUAN.Models.ViewModel.ProductDetailsVM
 @using PagedList.Mvc
 
-<link rel="stylesheet" type="text/css" href="~/Content/myStyle/CustomerHome.css" />
+<link rel="stylesheet" type="text/css" href="~/Content/MyStyle/CustomerHome.css" />
 
 <!-- Hiển thị danh sách sản phẩm -->
-@if (Model.TopProducts != null && Model.TopProducts.Any())
+@if (Model.TopProduct != null && Model.TopProduct.Any())
 {
     <section class="container-fluid listProduct">
         <h4 style="font-weight:bold;">Sản phẩm bán chạy</h4>
         <ul class="list-container">
-            @foreach (var product in Model.TopProducts)
+            @foreach (var product in Model.TopProduct)
             {
                 <li class="lproduct-item">
                     <div>
@@ -28,7 +28,7 @@
 
     <!-- Hiển thị phân trang -->
     <div class="pagination-container">
-        @Html.PagedListPager(Model.TopProducts, page => Url.Action("ProductDetails", new
+        @Html.PagedListPager(Model.TopProduct, page => Url.Action("ProductDetails", new
         {
             id = Model.product.ProductID,
             quantity = Model.quantity,

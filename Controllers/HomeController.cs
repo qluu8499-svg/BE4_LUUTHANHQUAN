@@ -14,7 +14,7 @@ namespace BE4_LUUTHANHQUAN.Controllers
     {
         private MyStoreEntities db = new MyStoreEntities();
 
-        // GET: Home/Index
+        // GET: Admin/Products
         public ActionResult Index(string searchTerm, int? page)
         {
             var model = new HomeProductVM();
@@ -25,22 +25,25 @@ namespace BE4_LUUTHANHQUAN.Controllers
             {
                 model.SearchTerm = searchTerm;
                 products = products.Where(p => p.ProductName.Contains(searchTerm) ||
-                                              p.ProductDescription.Contains(searchTerm) ||
-                                              p.Category.CategoryName.Contains(searchTerm));
+                                               p.ProductDescription.Contains(searchTerm) ||
+                                               p.Category.CategoryName.Contains(searchTerm));
             }
 
-            // Phân trang
+            // Đoạn code liên quan tới phân trang
+            // Lấy số trang hiện tại (mặc định là trang 1 nếu không có giá trị)
             int pageNumber = page ?? 1;
             int pageSize = 6; // Số sản phẩm mỗi trang
 
-            // Lấy top 10 sản phẩm bán chạy nhất
+            // lấy top 10 sản phẩm bán chạy nhất
             model.FeaturedProducts = products.OrderByDescending(p => p.OrderDetails.Count()).Take(10).ToList();
 
-            // Lấy danh sách sản phẩm bán ế nhất và phân trang
+            // lấy 20 sản phẩm bán ế nhất và phân trang
             model.NewProducts = products.OrderBy(p => p.OrderDetails.Count()).Take(20).ToPagedList(pageNumber, pageSize);
 
             return View(model);
         }
+
+
 
         // GET: Home/ProductDetails/5
         public ActionResult ProductDetails(int? id, int? quantity, int? page)
@@ -66,8 +69,8 @@ namespace BE4_LUUTHANHQUAN.Controllers
 
             model.product = pro;
             // Thay vì dùng Take(8) rồi mới ToPagedList, hãy để ToPagedList xử lý trực tiếp trên danh sách sắp xếp:
-            model.RelatedProducts = products.OrderBy(p => p.ProductID).AsEnumerable().ToPagedList(pageNumber, pageSize);
-            model.TopProducts = products.OrderByDescending(p => p.OrderDetails.Count()).AsEnumerable().ToPagedList(pageNumber, pageSize);
+            model.RelatedProduct = products.OrderBy(p => p.ProductID).AsEnumerable().ToPagedList(pageNumber, pageSize);
+            model.TopProduct = products.OrderByDescending(p => p.OrderDetails.Count()).AsEnumerable().ToPagedList(pageNumber, pageSize);
             if (quantity.HasValue)
             {
                 model.quantity = quantity.Value;

@@ -20,9 +20,9 @@ namespace BE4_LUUTHANHQUAN.Models.ViewModel
         public int PageSize { get; set; } = 3; // Số sản phẩm mỗi trang
 
         // Sửa List<Product> thành PagedList.IPagedList<Product>
-        public PagedList.IPagedList<Product> RelatedProducts { get; set; }
+        public PagedList.IPagedList<Product> RelatedProduct { get; set; }
 
         // danh sách 8 sản phẩm bán chạy nhất cùng danh mục
-        public PagedList.IPagedList<Product> TopProducts { get; set; }
+        public PagedList.IPagedList<Product> TopProduct { get; set; }
     }
 }
